@@ -1,0 +1,13 @@
+-- Deadlock Simulation
+
+-- USER A
+START TRANSACTION;
+SELECT * FROM Seats WHERE seat_id=1 FOR UPDATE;
+
+-- USER B
+START TRANSACTION;
+SELECT * FROM Seats WHERE seat_id=2 FOR UPDATE;
+
+-- Conflict
+SELECT * FROM Seats WHERE seat_id=2 FOR UPDATE;
+SELECT * FROM Seats WHERE seat_id=1 FOR UPDATE;

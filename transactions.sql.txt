@@ -1,0 +1,27 @@
+-- Transaction Booking
+
+START TRANSACTION;
+
+SELECT * FROM Seats 
+WHERE seat_id = 1 
+FOR UPDATE;
+
+UPDATE Seats 
+SET status = 'BOOKED' 
+WHERE seat_id = 1 AND status = 'AVAILABLE';
+
+INSERT INTO Bookings 
+VALUES (101,1,1,1,'CONFIRMED',NOW());
+
+COMMIT;
+
+
+-- Parallel Booking
+
+START TRANSACTION;
+
+SELECT * FROM Seats
+WHERE status='AVAILABLE'
+FOR UPDATE SKIP LOCKED;
+
+COMMIT;
